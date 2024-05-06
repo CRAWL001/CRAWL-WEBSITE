@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    .button-container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h3 {
+      margin-top: -40px;
+      opacity: 0;
+      animation: fadeIn 3s forwards;
+    }
+
+    .button {
+      width: 140px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0px 15px;
+      background-color: red;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      position: relative;
+      cursor: pointer;
+      font-weight: 900;
+      transition-duration: .2s;
+      background: linear-gradient(0deg, #000, #272727);
+      text-decoration: none;
+    }
+
+    .button:before, .button:after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #5900ff, #0000ff, #00ff00,#ffff00, #ff0000);
+      background-size: 400%;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      z-index: -1;
+      animation: steam 20s linear infinite;
+    }
+
+    @keyframes steam {
+      0% {
+        background-position: 0 0;
+      }
+
+      50% {
+        background-position: 400% 0;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
+    }
+
+    .button:after {
+      filter: blur(50px);
+    }
+
+    .button span {
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="button-container">
+    <h3>BOTS</h3>
+    <div></div>
+    <a href="https://wa.me/+94714184446?text=HERMIT_BOT_11" class="button" target="_blank"> <span>HERMIT BOT</span> </a> <br>
+    <a href="https://wa.me/+94714184446?text=SUHAIL_BOT_75" class="button" target="_blank"> <span>SUHAIL BOT</span> </a> <br>
+    <a href="https://wa.me/+94714184446?text=PRABATH_BOT_56" class="button" target="_blank"> <span>PRABATH BOT</span> </a> <br>
+    <a href="price.html" class="button" target="_blank"> <span>PRICE</span> </a> <br>
+    <a href="https://wa.me/+94714184446?text=GIVE_BIN_PLEASE_93" class="button" target="_blank"> <span>GET BIN</span> </a> <br>
+    <a href="deploying.html" class="button" target="_blank"> <span>DEPLOY</span> </a> <br>
+    <a href="https://wa.me/+94714184446?text=HELLOW_CRAWL_ERROR_84" class="button" target="_blank"> <span>ERROR</span> </a> <br>
+  </div>
+</body>
+</html>
