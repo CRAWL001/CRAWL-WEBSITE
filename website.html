@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
+
+    .button-container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h3 {
+      margin-top: -40px;
+      opacity: 0;
+      animation: fadeIn 3s forwards;
+    }
+
+    .button {
+      width: 140px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0px 15px;
+      background-color: red;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      position: relative;
+      cursor: pointer;
+      font-weight: 900;
+      transition-duration: .2s;
+      background: linear-gradient(0deg, #000, #272727);
+      text-decoration: none;
+    }
+
+    .button:before, .button:after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #5900ff, #0000ff, #00ff00,#ffff00, #ff0000);
+      background-size: 400%;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      z-index: -1;
+      animation: steam 20s linear infinite;
+    }
+
+    @keyframes steam {
+      0% {
+        background-position: 0 0;
+      }
+
+      50% {
+        background-position: 400% 0;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
+    }
+
+    .button:after {
+      filter: blur(50px);
+    }
+
+    .button span {
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="button-container">
+    <h3>MY ALL CREATED FILES</h3>
+    <div></div>
+    <a href="battry.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>WATCH BATTERY</span> </a> <br>
+    <a href="typing.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>CHECK TYPING</span> </a> <br>
+    <a href="pw genarate.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>PW GEN</span> </a> <br>
+    <a href="tranlate.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>TRANSLATE</span> </a> <br>
+    <a href="pair.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>PAIR</span> </a> <br>
+    <a href="website.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>THIS PAGE</span> </a> <br>
+    <a href="index2.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>ACC PAGE</span> </a> <br>
+    <a href="new one.html" class="button" target="_blank" onclick="delayRedirect(this)"> <span>BOT PAGE</span> </a> <br>
+  </div>
+
+  <script>
+    function delayRedirect(element) {
+      setTimeout(function() {
+        window.open(element.href, '_blank');
+      }, 9000); // Adjust delay time (in milliseconds) as needed
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="art.css">
+    <title>PW GEN</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #36d1dc;
+    background: linear-gradient(to right, #5b86e5, #36d1dc);
+}
+
+#captcha-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    padding: 40px 30px 30px;
+    border-radius: 8px;
+    box-shadow: 0 1em 2em rgba(0, 0, 0, 0.25);
+}
+
+#captcha-container img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.captcha{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.captcha button,
+.user button,
+.user input{
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+canvas{
+    border: none;
+    background-color: #e8e8e8;
+    border-radius: 4px;
+    border: 2px solid #1939ba;
+    border-radius: 6px;
+}
+
+.user{
+    width: 100%;
+}
+
+.user input,
+.user button{
+    margin-bottom: 14px;
+}
+
+button{
+    cursor: pointer;
+    background-color: #1939ba;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+button:hover{
+    background-color: #5b86e5;
+}
+</style>
+
+<body>
+
+    <div id="captcha-container">
+        <img src="bg.png">
+        <div class="captcha">
+            <canvas id="captcha" width="200" height="40"></canvas>
+            <button id="reload-captcha">Reload</button>
+        </div>
+        <div class="user">
+            <input type="text" id="captcha-input" placeholder="Enter CAPTCHA">
+            <button id="check-captcha">Check</button>
+        </div>
+        <p id="captcha-status">Status : IDLE</p>
+    </div>
+
+    <script>
+        
+document.addEventListener('DOMContentLoaded', function () {
+    var canvas = document.getElementById('captcha');
+    var ctx = canvas.getContext('2d');
+    var captchaText = generateCaptchaText(6);
+    const captchaStatus = document.getElementById('captcha-status');
+    drawCaptcha(captchaText);
+
+    // Function to handle CAPTCHA verification
+    function verifyCaptcha() {
+        var inputText = document.getElementById('captcha-input').value.toLowerCase();
+
+        if (inputText === captchaText.toLowerCase()) {
+            captchaStatus.textContent = 'Captcha Correct!';
+            captchaStatus.style.color = 'green';
+        } else if (inputText.length < 6) {
+            captchaStatus.textContent = 'Enter all characters!';
+            captchaStatus.style.color = 'red';
+        } else {
+            captchaStatus.textContent = 'Captcha incorrect. Please try again!';
+            captchaStatus.style.color = 'red';
+        }
+        setTimeout(() => {
+            captchaStatus.textContent = 'Status : IDLE';
+            captchaStatus.style.color = 'black';
+        }, 3000);
+        document.getElementById('captcha-input').value = '';
+        captchaText = generateCaptchaText(6);
+        drawCaptcha(captchaText);
+    }
+
+    // Add event listener for check button
+    document.getElementById('check-captcha').addEventListener('click', verifyCaptcha);
+
+    // Add event listener for reload button
+    document.getElementById('reload-captcha').addEventListener('click', function () {
+        captchaText = generateCaptchaText(6);
+        drawCaptcha(captchaText);
+        document.getElementById('captcha-input').value = '';
+        captchaStatus.textContent = 'Status : IDLE';
+    });
+
+    function generateCaptchaText(length) {
+        let result = '';
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const cahrsLength = chars.length;
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * cahrsLength));
+        }
+        return result;
+    }
+
+    function drawCaptcha(text) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#f3f3f3';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        addNoise(ctx);
+        ctx.fillStyle = '#06108c';
+        ctx.font = '24px Arial';
+
+        // Calculate the width of text and start position
+        const textWidth = ctx.measureText(text).width;
+        const startX = (canvas.width - textWidth) / 3;
+
+        // Adding rotation and distortion
+        for (let i = 0; i < text.length; i++) {
+            ctx.save();
+            // Addjust startX for each char
+            ctx.translate(startX + i * 20, 30);
+            ctx.rotate((Math.random() - 0.5) * 0.4);
+            ctx.fillText(text[i], 0, 0);
+            ctx.restore();
+        }
+    }
+
+    function addNoise(ctx) {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+        for (let i = 0; i < pixels.length; i += 1) {
+            // Rnadom noise color
+            let color = (Math.random() > 0.5) ? 255 : 0;
+            pixels[i] = pixels[i + 1] = pixels[i + 2] = color;
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+
+});
+
+    </script>
+</body>
+
+</html>
